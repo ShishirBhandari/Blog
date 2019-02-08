@@ -1,0 +1,26 @@
+{% extends 'blogs/base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+	<br>
+	<h4 class="lead">Login</h4>
+	<hr class="my-4">
+{% endblock header %}
+
+{% block content %}
+
+	{% if form.errors %}
+		<p class="lead">Your username and password didn't match. Please try again.</p>
+	{% endif %}
+
+	<form action="{% url 'login' %}" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+
+		<button name="submit" class="btn btn-primary">log in</button>
+		<input type="hidden" name="next" value="{% url 'index' %}">
+	</form>
+
+	<p>Don't have an account? <a href="{% url 'register' %}">Register an account.</a></p>
+
+{% endblock content %}

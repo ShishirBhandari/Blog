@@ -1,0 +1,85 @@
+{% load bootstrap4 %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Blog</title>
+
+	{% block head %}
+	{% endblock %}
+
+	{% bootstrap_css %}
+	{% bootstrap_javascript %}
+	<!-- {% bootstrap_jquery %} -->
+
+</head>
+<body>
+
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: lightcyan">
+		<div class="container">
+
+			<div class="navbar-header">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<a class="navbar-brand" href="{% url 'index' %}">Blog</a>
+			</div>
+
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						
+					</li>
+				</ul>
+
+
+				<ul class="navbar-nav navbar-right">
+					{% if user.is_authenticated %}
+						<li class="navbar-text">
+							<a>Hello, {{ user.username }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'logout' %}">log out</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'register' %}">register</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'login' %}">log in</a>
+						</li>
+					{% endif %}
+				</ul>
+
+				<form method="get" action="{% url 'simple_search' %}" accept-charset="utf-8" class="form-inline my-2 my-lg-0">
+					<input type="search" name="q" placeholder="Search blogpost" aria-label="Search" class="form-control mr-sm-2">
+					<button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+				</form>
+
+			</div>
+			
+		</div>
+	</nav>
+
+
+	<div class="container bg-light">
+		<div class="page-header">
+			{% block header %}
+			{% endblock header %}
+		</div>
+		<div>
+			{% block content %}
+			{% endblock content %}
+		</div>
+	</div>
+
+	
+
+</body>
+</html>

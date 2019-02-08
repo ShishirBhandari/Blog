@@ -1,0 +1,80 @@
+{% extends 'blogs/base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+	
+<!-- AJAX jquery script source-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+{% endblock %}
+
+
+{% block header %}
+	<div class="jumbotron">
+
+		<h2 class="lead">
+			<a href="{% url 'register' %}">Register an account</a> to create new posts and edit them.
+		</h2>
+
+	</div>
+{% endblock header %}
+
+{% block content %}
+
+	<p><a class="btn btn-outline-primary" href="{% url 'new_post' %}">create a new post</a></p>
+
+	{% for blogpost in blogposts %}
+		<div class="card bg-light mb-3">
+			<div class="card-header">
+				<small>{{ blogpost.date_added }}</small>
+				<small>
+					by {{ blogpost.owner }}
+				</small>
+			</div>
+			<div class="card-body">
+				<h3 class="card-title text-primary">
+					{{ blogpost.title }}
+				</h3>
+				<div class="card-text text-secondary">
+					{{ blogpost.text|linebreaks }}
+				</div>
+
+				<a class="card-link" href="{% url 'edit_post' blogpost.id %}">edit post</a>
+
+
+				{% if user.is_authenticated %}
+				<!-- Like button -->
+				<button id="likes" data-blogid="{{ blogpost.id }}" class="btn btn-outline-primary" type="button">
+					<span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;
+					Like
+					<span class="badge" id="like_count">{{ blogpost.likes }}</span>
+				</button>
+				{% endif %}
+
+			</div>
+		</div>
+	{% endfor %}
+		
+
+<!--
+	<ul>
+		<p><a href="{% url 'new_post' %}">create a new post</a></p>
+		{% for blogpost in blogposts %}
+			<li>
+				<p>{{ blogpost.date_added }}</p>
+				<p>{{ blogpost.title }}:</p>
+				<p>{{ blogpost.text|linebreaks }}</p>
+				<p>
+					Created by: {{ blogpost.owner }} - 
+					<a href="{% url 'edit_post' blogpost.id %}">edit_post</a>
+				</p>
+			</li>
+		{% endfor %}
+	</ul>
+-->
+
+
+<!-- javascript source for index -->
+<script type="text/javascript" src="{% static 'js/blogpost_index.js' %}"></script>
+
+{% endblock content %}

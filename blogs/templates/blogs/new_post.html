@@ -1,0 +1,29 @@
+{% extends 'blogs/base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+	<br>
+	<h4 class="lead">Create a new post:</h4>
+	<hr class="my-4">
+{% endblock header %}
+
+{% block content %}
+	
+	<form action="{% url 'new_post' %}" method="post" class="form">
+		{% csrf_token %}
+		{% bootstrap_form form %}
+
+		{{ formset.management_form }}
+
+		{% for formEach in formset %}
+			{{formEach}}
+		{% endfor %}
+
+		<!-- {% bootstrap_formset formset %} -->
+
+		{% buttons %}
+		<button class="btn btn-primary" name="submit">add post</button>
+		{% endbuttons %}
+	</form>
+
+{% endblock content %}

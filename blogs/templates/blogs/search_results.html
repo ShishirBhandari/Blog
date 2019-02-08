@@ -1,0 +1,31 @@
+{% extends 'blogs/base.html' %}
+
+{% block header %}
+	<hr class="my-4">
+	<h3 class="lead">Search results for "{{ query_string }}"" :</h3>
+	<hr class="my-4">
+{% endblock header %}
+
+{% block content %}
+
+	{% for blogpost in found_entries %}
+		<div class="card bg-light mb-3">
+			<div class="card-header">
+				<small>{{ blogpost.date_added }}</small>
+			</div>
+			<div class="card-body">
+				<h3 class="card-title text-primary">
+					{{ blogpost.title }}
+				</h3>
+				<div class="card-text text-secondary">
+					{{ blogpost.text|linebreaks }}
+				</div>
+
+				<a class="card-link" href="{% url 'edit_post' blogpost.id %}">edit post</a>
+			</div>
+		</div>
+	{% empty %}
+		<h4 class="lead">Cannot find any results.</h4>
+	{% endfor %}
+
+{% endblock content %}
